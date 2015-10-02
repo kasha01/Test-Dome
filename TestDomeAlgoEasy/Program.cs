@@ -8,8 +8,13 @@ namespace TestDomeAlgoEasy
 {
     class Program
     {
+        public static List<move[]> lisofpathes;
+
         static void Main(string[] args)
         {
+            Console.WriteLine("Frog Leap: Calculates the number of different combinations a frog can use to cover a given distance");
+            Console.WriteLine(new string('*', 20));
+
             while (true)
             {
                 PrintMenu();
@@ -18,82 +23,105 @@ namespace TestDomeAlgoEasy
 
         public static void PrintMenu()
         {
-            Console.WriteLine("Choose Function to Run: ");
-            Console.WriteLine("Press 1 - TwoSums");
-            Console.WriteLine("Press 2 - Frog Leap");
+            Console.WriteLine("Enter your distance for Froggie to walk in");
+            string s1 = Console.ReadLine();
+            int goal = 0;
+            if (!int.TryParse(s1, out goal)) { return; }
 
-            string s1 = String.Empty;
-            string s2 = String.Empty;
-            int opt = 0;
-            string r = Console.ReadLine();
-            bool a = int.TryParse(r, out opt);
-            if (a)
+            lisofpathes = new List<move[]>();
+            Node rootNode = new Node(move.none);
+            Stack<move> pathStack = new Stack<move>();
+
+            Frog(rootNode, goal, pathStack);
+
+            if(lisofpathes.Count <= 0 || lisofpathes[0].Length <= 0) { Console.WriteLine("No distance for Froggie to walk"); return; }
+
+            //Print All Possible Pathes
+            Console.WriteLine("Froggie possible pathes are: ");
+            StringBuilder sb = new StringBuilder();
+            foreach (move[] path in lisofpathes)
             {
-                switch (opt)
+                foreach (move p in path)
                 {
-                    case 1:
-                        Console.WriteLine("Enter your intengers separateed by comma");
-                        s1 = Console.ReadLine();
-                        Console.WriteLine("Enter Target Sum");
-                        s2 = Console.ReadLine();
-
-                        List<int> args = new List<int>();
-                        foreach (string c in s1.Split(','))
-                        {
-                            int ii = 0;
-                            if (int.TryParse(c.Trim(), out ii))
-                            {
-                                args.Add(ii);
-                            }
-                        }
-
-                        int goal = 0;
-                        if (!int.TryParse(s2, out goal)) { return; }
-
-                        Console.WriteLine();
-                        Console.WriteLine("Two Sums Are Indexes are: " + TwoSums(args, goal));
-                        Console.WriteLine();
-                        break;
-
-                    default:
-                        break;
+                    sb.Append(p);
+                    sb.Append(',');
                 }
+                sb.Remove(sb.Length - 1, 1);
+                Console.WriteLine(sb.ToString());
+                sb.Clear();
             }
-            else
-            {
-                Console.WriteLine("Invalid Entry");
-            }
+            Console.WriteLine(new string('*', 20));
         }
 
-        public static string TwoSums(List<int> list, int goalSum)
+        public static void Frog(Node node, int steps, Stack<move> stack)
         {
-            List<Tuple<int, int>> twoSums = new List<Tuple<int, int>>();
-            for (int i = 0; i < list.Count; i++)
+            if (steps > 1)
             {
-                int n1 = list[i];
-
-                for (int j = 0; j < list.Count; j++)
+                //If remaining steps > 1 (meaning froggies can either Jump or Step)
+                for (int i = 0; i < 2; i++)
                 {
-                    if (n1 + list[j] == goalSum)
+                    //Each Parent Node has Two Child Nodes
+                    if (i == 0)
                     {
-                        twoSums.Add(new Tuple<int, int>(i, j));
+                        //First Child Node - Holds the Jump
+                        node.LNode = new Node(move.jump);   //Move to the Left Node
+                        Node n = node.LNode;                //Pass in the Left Node
+                        int s = steps - 2;                  //Hold in the remaining steps, when the recurssive Frog returns, the number of steps before the recurssive call (no of steps at the parent node) will apply.
+                        stack.Push(move.jump);              //push froggie move into the stack
+                        Frog(n, s, stack);
+                        stack.Pop();                        //pop the child node step, stack pointer now points at the parent node step
+                    }
+                    else if (i == 1)
+                    {
+                        //Second Child Node - Holds the Step
+                        node.RNode = new Node(move.step);
+                        Node n = node.RNode;
+                        int s = steps - 1;
+                        stack.Push(move.step);
+                        Frog(n, s, stack);
+                        stack.Pop();
                     }
                 }
             }
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine();
-            foreach (var item in twoSums)
+            else if (steps == 1)
             {
-                sb.Append(item.Item1);
-                sb.Append(',');
-                sb.Append(item.Item2);
-                sb.AppendLine();
+                //If remaining step is Only 1: Froggie can only Step, he/she cannot jump
+                node.CNode = new Node(move.step);
+                int s = steps - 1;
+                stack.Push(move.step);
+                Frog(node, s, stack);
+                stack.Pop();
             }
-
-            return sb.ToString();
+            else if (steps <= 0)
+            {
+                //If remaining steps is zero: No more remaining steps - Log the stack which has the path Froggie made
+                // add pathStack to list of pathes
+                move[] a = stack.Select(q => q).ToArray();
+                lisofpathes.Add(a);
+            }
         }
     }
 
+    enum move
+    {
+        none,
+        step,
+        jump
+    }
+
+    class Node
+    {
+        public move value { get; set; }
+        public Node RNode { get; set; }
+        public Node LNode { get; set; }
+        public Node CNode { get; set; }
+
+        private Node() { }
+
+        public Node(move move)
+        {
+            this.value = move;
+        }
+    }
 }
 
