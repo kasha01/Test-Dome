@@ -66,7 +66,7 @@ namespace TestDomeAlgoEasy
                         //First Child Node - Holds the Jump
                         node.LNode = new Node(move.jump);   //Move to the Left Node
                         Node n = node.LNode;                //Pass in the Left Node
-                        int s = steps - 2;                  //Hold in the remaining steps, when the recurssive Frog returns, the number of steps before the recurssive call (no of steps at the parent node) will apply.
+                        int s = steps - 2;                  //Holds the no of the remaining steps at the parent level before the recurssive call to the children, so when the recurssive returns I will have the (no of steps at the parent node).
                         stack.Push(move.jump);              //push froggie move into the stack
                         Frog(n, s, stack);
                         stack.Pop();                        //pop the child node step, stack pointer now points at the parent node step
