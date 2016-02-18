@@ -8,7 +8,6 @@ Solution to testdome.com test questions:
 <li><b>All Anagrams:</b><br>
 Check if two words are each other's anagrams: An anagram is a word formed from another by rearranging its letters, using all the original letters exactly once; for example, orchestra can be rearranged into carthorse.
 </li>
-<br>
 
 <li><b>Path:</b><br>
 Provides change directory (cd) function for an abstract file system.
@@ -21,17 +20,14 @@ Notes:
 </ul>
 For example, new Path("/a/b/c/d").Cd("../x").CurrentPath should return "/a/b/c/x".
 </li>
-<br>
 
 <li><b>Palindrome:</b><br> Check if a given sentence is a palindrome: A palindrome is a word, phrase, verse, or sentence that reads the same backward or forward. Only the order of English alphabet letters (A-Z and a-z) should be considered, other characters should be ignored.
 For example, IsPalindrome("Noel sees Leon.") should return true as spaces, period, and case should be ignored resulting with "noelseesleon" which is a palindrome since it reads same backward and forward.
 </li>
-<br>
 
 <li><b>Run:</b><br> Finds the zero-based index of the longest run in a string. A run is a consecutive sequence of the same character. If there is more than one run with the same length, return the index of the first one.
 For example, IndexOfLongestRun("abbcccddddcccbba") should return 6 as the longest run is dddd and it first appears on index 6.
 </li>
-<br>
 
 <li><b>Sums Of Two:</b> <br>
 A function that, given a list and a target sum, returns zero-based indices of any two distinct elements 
@@ -43,7 +39,6 @@ For example, FindTwoSum(new List<int>() { 1, 3, 5, 7, 9 }, 12) should return any
     3, 2 (7 + 5 = 12)
     4, 1 (9 + 3 = 12)
 </li>
-<br>
 
 <li><b>Frog Leap:</b><br>
 A frog only moves forward, but it can move in steps 1 inch long or in jumps 2 inches long. A frog can cover the same 
