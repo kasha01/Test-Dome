@@ -5,8 +5,12 @@ Solution to testdome.com test questions:
 <h2>Projects:</h2>
 
 <ul>
-<li><b>All Anagrams:</b><br>
-Check if two words are each other's anagrams: An anagram is a word formed from another by rearranging its letters, using all the original letters exactly once; for example, orchestra can be rearranged into carthorse.
+<li><b>Anagramism - All Anagrams:</b><br>
+Get all Anagrams of a word/sequence of characters
+</li><br>
+
+<li><b>Are Anagrams:</b><br>
+Check if two words are each other's anagrams: An <b>Anagram</b> is a word formed from another by rearranging its letters, using all the original letters exactly once; for example, orchestra can be rearranged into carthorse.
 </li>
 
 <li><b>Path:</b><br>
@@ -40,7 +44,7 @@ For example, FindTwoSum(new List<int>() { 1, 3, 5, 7, 9 }, 12) should return any
     4, 1 (9 + 3 = 12)
 </li>
 
-<li><b>Frog Leap:</b><br>
+<li><b>Frog Leap:</b> <font color="#0000ff"><i>for more info see frog leap wiki</i></font><br>
 A frog only moves forward, but it can move in steps 1 inch long or in jumps 2 inches long. A frog can cover the same 
 distance using different combinations of steps and jumps.
 This calculates the number of different combinations a frog can use to cover a given distance.
