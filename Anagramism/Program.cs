@@ -4,53 +4,67 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Anagramism
+namespace AllAnagrams
 {
     class Program
     {
+        static List<char[]> allAnagramsList = new List<char[]>();
         static void Main(string[] args)
         {
-            string s1 = String.Empty;
-            string s2 = String.Empty;
+            string inputString = String.Empty;
+            Stack<char> st = new Stack<char>();
 
+            Console.WriteLine("Find All Anagrams of a string (Find all possible combination)");
             Console.WriteLine("Enter First String");
-            s1 = Console.ReadLine();
-            Console.WriteLine("Enter Second String");
-            s2 = Console.ReadLine();
+            inputString = Console.ReadLine();
             Console.WriteLine();
-            Console.WriteLine("Is Anagram: " + AreStringsAnagrams(s1, s2).ToString());
-            Console.WriteLine();
+
+            Node node = new Node();
+            getAllAnagrams(inputString, st, ref node);
+
+            Console.WriteLine("All Angrams are:");
+            Console.WriteLine("==========================================");
+            int i = 0;
+            foreach (char[] t in allAnagramsList)
+            {
+                i++;
+                Console.WriteLine(i + ". " + string.Join("", t));
+            }
+            Console.ReadLine();
         }
 
-        public static bool AreStringsAnagrams(string s1, string s2)
+        private static void getAllAnagrams(string s, Stack<char> st, ref Node n)
         {
-            Dictionary<char, int> dic = new Dictionary<char, int>();
-
-            foreach (char c in s1)
+            if (s.Length <= 0)
             {
-                if (!dic.ContainsKey(c))
-                {
-                    dic.Add(c, 1);
-                }
-                else
-                {
-                    dic[c] = dic[c] + 1;
-                }
+                // End of tree branch - flatten the stack and add it to Anagrams list.
+                allAnagramsList.Add(st.Select(q => q).ToArray());
             }
 
-            foreach (char c in s2)
+            for (int i = 0; i < s.Length; i++)
             {
-                if (!dic.ContainsKey(c) || dic[c] <= 0)
+                if (n != null && !n.nodeList.Exists(x => x.value == s[i]))
                 {
-                    return false;
-                }
-                else
-                {
-                    dic[c] = dic[c] - 1;
+                    Node newnode = new Node();
+                    newnode.value = s[i];
+                    st.Push(s[i]);
+                    n.nodeList.Add(newnode);
+                    string temp = s.Remove(i, 1);
+                    getAllAnagrams(temp, st, ref newnode);
+                    st.Pop();
                 }
             }
+        }
 
-            return true;
+        class Node
+        {
+            public List<Node> nodeList { get; set; }
+            public char value { get; set; }
+
+            public Node()
+            {
+                nodeList = new List<Node>();
+            }
         }
     }
 }
