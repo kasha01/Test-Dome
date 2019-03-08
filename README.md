@@ -1,8 +1,19 @@
-# TestDome
 
-Solution to testdome.com test questions:
+# NOT recommended
+**better to check [this](https://github.com/kasha01/CodeBlocks/tree/master/InterviewQ)**
 
-<h2>Projects:</h2>
+
+
+
+
+
+
+
+##### ~~TestDome~~
+
+~~Solution to testdome.com test questions:~~
+
+~~Projects:~~
 
 <ul>
 <li><b>Anagramism - All Anagrams:</b><br>
