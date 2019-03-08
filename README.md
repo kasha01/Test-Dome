@@ -1,6 +1,6 @@
 
 # NOT recommended
-**better to check [this](https://github.com/kasha01/CodeBlocks/tree/master/InterviewQ)**
+**better to check [this repo](https://github.com/kasha01/CodeBlocks/tree/master/InterviewQ)**
 
 
 
